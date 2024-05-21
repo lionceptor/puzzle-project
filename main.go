@@ -9,12 +9,18 @@ import (
 var templates = template.Must(template.ParseFiles("templates/index.html", "templates/reveal.html"))
 
 func main() {
+
+	port, exists := os.LookupEnv("PORT")
+    if !exists {
+        port = "8080"
+    }
+    
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/reveal", revealHandler)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
-	fmt.Println("Server started at :8080")
-	http.ListenAndServe(":" + os.Getenv("PORT"), nil)
+	fmt.Println("Server started at :dynamic port")
+	http.ListenAndServe(":" + port,  nil)
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
