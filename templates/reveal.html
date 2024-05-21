@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Date Reveal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -15,6 +16,7 @@
             height: 100vh;
             margin: 0;
             text-align: center;
+            padding: 1rem;
         }
         .container {
             background: #ffffff;
@@ -22,6 +24,8 @@
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
         }
         img {
             max-width: 100%;
@@ -31,17 +35,38 @@
             list-style-type: none;
             padding: 0;
         }
+        a {
+            display: inline-block;
+            background-color: #BF5700;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            width: 100%;
+        }
+        a:hover {
+            background-color: #A54900;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <img src="/static/bevo_mine.jpeg" alt="Bevo Mine">
         <h1>Yay! You got it right!</h1>
-        <p>Here are the details of our date:</p>
+        <p>Here are the details of our date on June 1 :) :</p>
         <ul>
-            <li>Baseball cage at Chelsea Piers</li>
-            <li>Dinner at Emmett's on Grove</li>
+            <li>Baseball Cage 2 at Chelsea Piers from 6 - 6:30 PM</li>
+            <li>Dinner at Emmett's on Grove at 6:45 PM</li>
+            <li>Attire: Something you would be comfortable in swinging a bat and going out to some delicious pizza and drinks after!</li>
         </ul>
+        <a href="https://www.emmettsongrove.com/menus/#food" target="_blank">View Menu</a>
     </div>
 </body>
 </html>

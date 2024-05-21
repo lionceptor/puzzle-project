@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-var templates = template.Must(template.ParseFiles("index.html", "reveal.html"))
+var templates = template.Must(template.ParseFiles("templates/index.html", "templates/reveal.html"))
 
 func main() {
 	http.HandleFunc("/", homeHandler)
@@ -24,10 +24,10 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 func revealHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		answer := r.FormValue("answer")
-		if answer == "The Tower" || answer == "the tower" || answer == "Tower" || answer == "tower" {
+		if answer == "Cain & Abel's" || answer == "cain & abel's" || answer == "Cain and Abel's" || answer == "cain and abel's" {
 			templates.ExecuteTemplate(w, "reveal.html", nil)
 			return
 		}
-		templates.ExecuteTemplate(w, "index.html", "Sorry, that’s not correct. Try again!")
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 }
