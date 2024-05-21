@@ -12,9 +12,6 @@ var templates = template.Must(template.ParseFiles("templates/index.html", "templ
 func main() {
 
 	port := os.Getenv("PORT")
-	if port == "" {
-		log.Fatal("$PORT must be set")
-	}
     
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/reveal", revealHandler)
