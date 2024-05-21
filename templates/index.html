@@ -125,9 +125,10 @@
 
             function type() {
                 if (index < typewriterText.length) {
-                    typewriterElement.innerHTML += typewriterText.charAt(index);
+                    const char = typewriterText.charAt(index);
+                    typewriterElement.innerHTML += char;
                     index++;
-                    if (typewriterElement.offsetWidth >= window.innerWidth - 20) {
+                    if (typewriterElement.offsetWidth >= window.innerWidth - 20 && char === ' ') {
                         typewriterElement.innerHTML += '<br>';
                     }
                     setTimeout(type, 100);
