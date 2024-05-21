@@ -28,7 +28,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 func revealHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		answer := r.FormValue("answer")
-		if answer == "Cain & Abel's" || answer == "cain & abel's" || answer == "Cain and Abel's" || answer == "cain and abel's" || "cain and abels" {
+		if answer == "Cain & Abel's" || answer == "cain & abel's" || answer == "Cain and Abel's" || answer == "cain and abel's" || answer == "cain and abels" || answer == "Cain and Abels" {
 			templates.ExecuteTemplate(w, "reveal.html", nil)
 			return
 		}
