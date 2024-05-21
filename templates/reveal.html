@@ -19,23 +19,58 @@
             padding: 1rem;
         }
         .container {
-            background: #ffffff;
-            color: #BF5700;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
-            width: 100%;
+            position: relative;
+            width: 300px;
+            height: 200px;
+            perspective: 1000px;
         }
-        img {
+        .envelope {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+            transform: rotateX(0deg);
+            transition: transform 2s;
+        }
+        .envelope .front, .envelope .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+        .envelope .front {
+            background: #ffffff;
+            border: 2px solid #BF5700;
+            border-bottom: none;
+            z-index: 2;
+        }
+        .envelope .back {
+            background: #BF5700;
+            transform: rotateX(180deg);
+        }
+        .envelope .flap {
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            background: #ffffff;
+            border: 2px solid #BF5700;
+            top: -50%;
+            transform-origin: bottom;
+            transition: transform 2s;
+        }
+        .content {
+            display: none;
+            margin-top: 20px;
+        }
+        .content img {
             max-width: 100%;
             height: auto;
         }
-        ul {
+        .content ul {
             list-style-type: none;
             padding: 0;
         }
-        a {
+        .content a {
             display: inline-block;
             background-color: #BF5700;
             color: white;
@@ -44,29 +79,47 @@
             text-decoration: none;
             font-weight: bold;
             margin-top: 1rem;
-            width: 100%;
         }
-        a:hover {
+        .content a:hover {
             background-color: #A54900;
         }
-        @media (max-width: 600px) {
-            .container {
-                padding: 1rem;
-            }
+        .content a {
+            display: block;
+            width: max-content;
+            margin: 1rem auto 0 auto;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="/static/bevo_mine.jpeg" alt="Bevo Mine">
-        <h1>Yay! You got it right!</h1>
-        <p>Here are the details of our date on June 1 :) :</p>
+    <div class="container" id="container">
+        <div class="envelope" id="envelope">
+            <div class="front"></div>
+            <div class="back"></div>
+            <div class="flap" id="flap"></div>
+        </div>
+        <div class="content" id="content">
+            <img src="/static/bevo_mine.jpeg" alt="Bevo Mine">
+            <h1>Yay! You got it right!</h1>
+            <p>Here are the details of our date on June 1 :) :</p>
         <ul>
             <li>Baseball Cage 2 at Chelsea Piers from 6 - 6:30 PM</li>
             <li>Dinner at Emmett's on Grove at 6:45 PM</li>
+            <li> </li>
             <li>Attire: Something you would be comfortable in swinging a bat and going out to some delicious pizza and drinks after!</li>
         </ul>
-        <a href="https://www.emmettsongrove.com/menus/#food" target="_blank">View Menu</a>
+        <a href="https://www.emmettsongrove.com/menus/#food" target="_blank">View Menu</
+        </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.getElementById('flap').style.transform = 'rotateX(-180deg)';
+                document.getElementById('envelope').style.transform = 'rotateX(-180deg)';
+                setTimeout(function() {
+                    document.getElementById('content').style.display = 'block';
+                }, 2000);
+            }, 1000); // 1 second delay before starting the animation
+        });
+    </script>
 </body>
 </html>

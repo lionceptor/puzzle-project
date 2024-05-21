@@ -28,10 +28,10 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 func revealHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		answer := r.FormValue("answer")
-		if answer == "Cain & Abel's" || answer == "cain & abel's" || answer == "Cain and Abel's" || answer == "cain and abel's" {
+		if answer == "Cain & Abel's" || answer == "cain & abel's" || answer == "Cain and Abel's" || answer == "cain and abel's" || "cain and abels" {
 			templates.ExecuteTemplate(w, "reveal.html", nil)
 			return
 		}
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		http.Redirect(w, r, "/?error=1", http.StatusSeeOther)
 	}
 }
