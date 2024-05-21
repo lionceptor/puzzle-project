@@ -4,23 +4,21 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"os"
 )
 
 var templates = template.Must(template.ParseFiles("templates/index.html", "templates/reveal.html"))
 
 func main() {
 
-	port, exists := os.LookupEnv("PORT")
-    if !exists {
-        port = "8080"
-    }
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Fatal("$PORT must be set")
     
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/reveal", revealHandler)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
-	fmt.Println("Server started at :dynamic port")
-	http.ListenAndServe(":" + port,  nil)
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
