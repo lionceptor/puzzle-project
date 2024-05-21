@@ -13,11 +13,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             text-align: center;
             padding: 1rem;
-            overflow: hidden;
+            overflow: auto; /* Ensure scrolling */
         }
         .container {
             background: #ffffff;
@@ -31,6 +31,8 @@
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 1s ease-out, transform 1s ease-out;
+            margin-bottom: 2rem; /* Add some space at the bottom */
+            text-align: center; /* Center align text */
         }
         .container.visible {
             display: block;
@@ -55,8 +57,9 @@
             50% { border-color: #BF5700; }
         }
         img {
-            max-width: 100%;
+            max-width: 100px; /* Resize image */
             height: auto;
+            margin: 1rem auto; /* Center image horizontally */
         }
         button, .button-link {
             background-color: #BF5700;
@@ -76,9 +79,12 @@
         ul {
             list-style-type: none;
             padding: 0;
-            text-align: left;
+            text-align: center; /* Center align list */
             margin: 0 auto;
             max-width: 90%;
+        }
+        .empty-line {
+            height: 1rem; /* Adjust as needed */
         }
         @media (max-width: 600px) {
             .container {
@@ -107,6 +113,7 @@
         <ul>
             <li>Baseball Cage 2 at Chelsea Piers from 6 - 6:30 PM</li>
             <li>Dinner at Emmett's on Grove at 6:45 PM</li>
+            <li class="empty-line"></li>
             <li>Attire: Something you would be comfortable in swinging a bat and going out to some delicious pizza and drinks after!</li>
         </ul>
         <a href="https://www.emmettsongrove.com/menus/#food" target="_blank" class="button-link">View Menu</a>
@@ -123,7 +130,7 @@
                     container.classList.add('visible');
                     launchConfetti();
                 }, 10); // slight delay to trigger the transition
-            }, 4000); // Delay for the intro typing animation
+            }, 5000); // Delay for the intro typing animation
         });
 
         function launchConfetti() {
