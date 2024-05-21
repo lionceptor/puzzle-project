@@ -14,7 +14,7 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	fmt.Println("Server started at :8080")
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":" + os.Getenv("PORT"), nil)
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
