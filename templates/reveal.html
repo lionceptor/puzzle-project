@@ -41,7 +41,6 @@
         }
         .intro {
             font-size: 1.5rem;
-            animation: typing 4s steps(40, end), blink-caret .75s step-end infinite;
             white-space: nowrap;
             overflow: hidden;
             border-right: .15em solid #BF5700;
@@ -104,12 +103,13 @@
 </head>
 <body>
     <div class="intro" id="intro">
-        Get ready for an exciting date night reveal...
+        <span id="intro-text"></span>
+        <span class="blink-caret">|</span>
     </div>
     <div class="container" id="container">
         <img src="/static/bevo_mine.jpeg" alt="Bevo Mine">
         <h1>Yay! You got it right!</h1>
-        <p>Here are the details of our date on June 1 :) :</p>
+        <p>Here are the details of our date on June 1 :)</p>
         <ul>
             <li>Baseball Cage 2 at Chelsea Piers from 6 - 6:30 PM</li>
             <li>Dinner at Emmett's on Grove at 6:45 PM</li>
@@ -122,45 +122,63 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                document.getElementById('intro').style.display = 'none';
-                const container = document.getElementById('container');
-                container.style.display = 'block';
-                setTimeout(function() {
-                    container.classList.add('visible');
-                    launchConfetti();
-                }, 10); // slight delay to trigger the transition
-            }, 5000); // Delay for the intro typing animation
-        });
+            const introText = "Get ready for an exciting date night reveal...";
+            const introElement = document.getElementById('intro-text');
+            let index = 0;
 
-        function launchConfetti() {
-            var duration = 5 * 1000;
-            var end = Date.now() + duration;
-
-            // Confetti options
-            var colors = ['#ff0', '#ff6347', '#87ceeb', '#ffa07a', '#32cd32', '#4b0082'];
-
-            (function frame() {
-                confetti({
-                    particleCount: 3,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 },
-                    colors: colors
-                });
-                confetti({
-                    particleCount: 3,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 },
-                    colors: colors
-                });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
+            function type() {
+                if (index < introText.length) {
+                    introElement.innerHTML += introText.charAt(index);
+                    index++;
+                    if (introElement.offsetWidth >= window.innerWidth - 20) {
+                        introElement.innerHTML += '<br>';
+                    }
+                    setTimeout(type, 100);
+                } else {
+                    document.querySelector('.blink-caret').style.display = 'none';
+                    setTimeout(function() {
+                        document.getElementById('intro').style.display = 'none';
+                        const container = document.getElementById('container');
+                        container.style.display = 'block';
+                        setTimeout(function() {
+                            container.classList.add('visible');
+                            launchConfetti();
+                        }, 10); // slight delay to trigger the transition
+                    }, 1000); // Additional delay after typing animation
                 }
-            }());
-        }
+            }
+
+            type();
+
+            function launchConfetti() {
+                var duration = 5 * 1000;
+                var end = Date.now() + duration;
+
+                // Confetti options
+                var colors = ['#ff0', '#ff6347', '#87ceeb', '#ffa07a', '#32cd32', '#4b0082'];
+
+                (function frame() {
+                    confetti({
+                        particleCount: 3,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0 },
+                        colors: colors
+                    });
+                    confetti({
+                        particleCount: 3,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1 },
+                        colors: colors
+                    });
+
+                    if (Date.now() < end) {
+                        requestAnimationFrame(frame);
+                    }
+                }());
+            }
+        });
     </script>
 </body>
 </html>

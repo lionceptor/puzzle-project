@@ -18,6 +18,27 @@
             margin: 0;
             text-align: center;
             padding: 1rem;
+            overflow: auto; /* Ensure scrolling */
+        }
+        .container {
+            background: #ffffff;
+            color: #BF5700;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            margin-bottom: 2rem; /* Add some space at the bottom */
+            text-align: center; /* Center align text */
+        }
+        .container.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
         .typewriter-container {
             display: flex;
@@ -31,7 +52,6 @@
             white-space: nowrap;
             margin: 0 auto;
             letter-spacing: .15em;
-            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
         }
         @keyframes typing {
             from { width: 0 }
@@ -40,23 +60,6 @@
         @keyframes blink-caret {
             from, to { border-color: transparent }
             50% { border-color: #BF5700; }
-        }
-        .container {
-            background: #ffffff;
-            color: #BF5700;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
-            width: 100%;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-            display: none;
-        }
-        .container.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
         img {
             max-width: 100%;
@@ -93,20 +96,14 @@
             .container {
                 padding: 1rem;
             }
-            .typewriter-container {
-                padding: 0 1rem;
-                text-align: center;
-            }
-            .typewriter {
-                font-size: 1rem;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="typewriter-container" id="typewriter-container">
+    <div class="typewriter-container">
         <div class="typewriter" id="typewriter">
-            Hi Kayla! I decided to use everything I learned coding the resy bot for this :)
+            <span id="typewriter-text"></span>
+            <span class="blink-caret">|</span>
         </div>
     </div>
     <div class="container" id="container">
@@ -122,14 +119,32 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                document.getElementById('typewriter-container').style.display = 'none';
-                const container = document.getElementById('container');
-                container.style.display = 'block';
-                setTimeout(function() {
-                    container.classList.add('visible');
-                }, 20); // slight delay to trigger the transition
-            }, 4000); // Delay until the typewriter animation completes
+            const typewriterText = "Hi Kayla! I decided to use everything I learned coding the resy bot for this :)";
+            const typewriterElement = document.getElementById('typewriter-text');
+            let index = 0;
+
+            function type() {
+                if (index < typewriterText.length) {
+                    typewriterElement.innerHTML += typewriterText.charAt(index);
+                    index++;
+                    if (typewriterElement.offsetWidth >= window.innerWidth - 20) {
+                        typewriterElement.innerHTML += '<br>';
+                    }
+                    setTimeout(type, 100);
+                } else {
+                    document.querySelector('.blink-caret').style.display = 'none';
+                    setTimeout(function() {
+                        document.querySelector('.typewriter-container').style.display = 'none';
+                        const container = document.getElementById('container');
+                        container.style.display = 'block';
+                        setTimeout(function() {
+                            container.classList.add('visible');
+                        }, 10); // slight delay to trigger the transition
+                    }, 1000); // Additional delay after typing animation
+                }
+            }
+
+            type();
         });
     </script>
 </body>
