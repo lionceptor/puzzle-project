@@ -17,109 +17,143 @@
             margin: 0;
             text-align: center;
             padding: 1rem;
+            overflow: hidden;
         }
         .container {
-            position: relative;
-            width: 300px;
-            height: 200px;
-            perspective: 1000px;
-        }
-        .envelope {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            transform-style: preserve-3d;
-            transform: rotateX(0deg);
-            transition: transform 2s;
-        }
-        .envelope .front, .envelope .back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-        }
-        .envelope .front {
             background: #ffffff;
-            border: 2px solid #BF5700;
-            border-bottom: none;
-            z-index: 2;
-        }
-        .envelope .back {
-            background: #BF5700;
-            transform: rotateX(180deg);
-        }
-        .envelope .flap {
-            position: absolute;
+            color: #BF5700;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
             width: 100%;
-            height: 50%;
-            background: #ffffff;
-            border: 2px solid #BF5700;
-            top: -50%;
-            transform-origin: bottom;
-            transition: transform 2s;
-        }
-        .content {
             display: none;
-            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
         }
-        .content img {
+        .container.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .intro {
+            font-size: 1.5rem;
+            animation: typing 4s steps(40, end), blink-caret .75s step-end infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .15em solid #BF5700;
+            margin: 0 auto;
+            letter-spacing: .15em;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #BF5700; }
+        }
+        img {
             max-width: 100%;
             height: auto;
         }
-        .content ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        .content a {
-            display: inline-block;
+        button, .button-link {
             background-color: #BF5700;
             color: white;
+            border: none;
             padding: 0.5rem 1rem;
             border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
             text-decoration: none;
-            font-weight: bold;
+            display: inline-block;
             margin-top: 1rem;
         }
-        .content a:hover {
+        button:hover, .button-link:hover {
             background-color: #A54900;
         }
-        .content a {
-            display: block;
-            width: max-content;
-            margin: 1rem auto 0 auto;
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+            margin: 0 auto;
+            max-width: 90%;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+        }
+        #confetti-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
     </style>
 </head>
 <body>
+    <div class="intro" id="intro">
+        Get ready for an exciting date night reveal...
+    </div>
     <div class="container" id="container">
-        <div class="envelope" id="envelope">
-            <div class="front"></div>
-            <div class="back"></div>
-            <div class="flap" id="flap"></div>
-        </div>
-        <div class="content" id="content">
-            <img src="/static/bevo_mine.jpeg" alt="Bevo Mine">
-            <h1>Yay! You got it right!</h1>
-            <p>Here are the details of our date on June 1 :) :</p>
+        <img src="/static/bevo_mine.jpeg" alt="Bevo Mine">
+        <h1>Yay! You got it right!</h1>
+        <p>Here are the details of our date on June 1 :) :</p>
         <ul>
             <li>Baseball Cage 2 at Chelsea Piers from 6 - 6:30 PM</li>
             <li>Dinner at Emmett's on Grove at 6:45 PM</li>
-            <li> </li>
             <li>Attire: Something you would be comfortable in swinging a bat and going out to some delicious pizza and drinks after!</li>
         </ul>
-        <a href="https://www.emmettsongrove.com/menus/#food" target="_blank">View Menu</
-        </div>
+        <a href="https://www.emmettsongrove.com/menus/#food" target="_blank" class="button-link">View Menu</a>
     </div>
+    <canvas id="confetti-canvas"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
-                document.getElementById('flap').style.transform = 'rotateX(-180deg)';
-                document.getElementById('envelope').style.transform = 'rotateX(-180deg)';
+                document.getElementById('intro').style.display = 'none';
+                const container = document.getElementById('container');
+                container.style.display = 'block';
                 setTimeout(function() {
-                    document.getElementById('content').style.display = 'block';
-                }, 2000);
-            }, 1000); // 1 second delay before starting the animation
+                    container.classList.add('visible');
+                    launchConfetti();
+                }, 10); // slight delay to trigger the transition
+            }, 4000); // Delay for the intro typing animation
         });
+
+        function launchConfetti() {
+            var duration = 5 * 1000;
+            var end = Date.now() + duration;
+
+            // Confetti options
+            var colors = ['#ff0', '#ff6347', '#87ceeb', '#ffa07a', '#32cd32', '#4b0082'];
+
+            (function frame() {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: colors
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: colors
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
     </script>
 </body>
 </html>
