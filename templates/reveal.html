@@ -106,6 +106,7 @@
         <span id="intro-text"></span>
         <span class="blink-caret">|</span>
     </div>
+
     <div class="container" id="container">
         <img src="/static/bevo_mine.jpeg" alt="Bevo Mine">
         <h1>Yay! You got it right!</h1>
@@ -115,6 +116,8 @@
             <li>Dinner at Emmett's on Grove at 6:45 PM</li>
             <li class="empty-line"></li>
             <li>Attire: Something you would be comfortable in swinging a bat and going out to some delicious pizza and drinks after!</li>
+            <li class="empty-line"></li>
+            <li id="countdown"></li>
         </ul>
         <a href="https://www.emmettsongrove.com/menus/#food" target="_blank" class="button-link">View Menu</a>
     </div>
@@ -178,6 +181,30 @@
                     }
                 }());
             }
+
+            var targetDate = new Date('June 1, 2024 18:00:00 GMT-0400');
+            
+            function updateCountdown() {
+                var now = new Date();
+                var timeDiff = targetDate - now;
+                
+                if (timeDiff <= 0) {
+                    document.getElementById('countdown').innerHTML = 'It\'s date night!';
+                } else {
+                    var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+                    
+                    document.getElementById('countdown').innerHTML = 'Countdown: ' + days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+                }
+            }
+
+            // Initial call to update countdown
+            updateCountdown();
+            
+            // Update countdown every second
+            setInterval(updateCountdown, 1000);
         });
     </script>
 </body>
