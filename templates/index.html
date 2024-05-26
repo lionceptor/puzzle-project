@@ -2,15 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Puzzle Time</title>
+    <title>Birthday Surprise</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/htmx.org@1.4.1"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Beaumont';
+            src: url('/static/Beaumont-Regular.otf') format('opentype');
+        }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #BF5700; /* UT Austin Burnt Orange */
-            color: white;
+            font-family: 'Beaumont', 'Inter', sans-serif;
+            background-color: #0e1a2b; /* League of Legends Dark Blue */
+            color: #f0e6d2; /* League of Legends Light Gold */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,8 +24,8 @@
             overflow: auto; /* Ensure scrolling */
         }
         .container {
-            background: #ffffff;
-            color: #BF5700;
+            background: #1c2b3a; /* League of Legends Dark Blue */
+            color: #f0e6d2; /* League of Legends Light Gold */
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -48,10 +51,11 @@
         }
         .typewriter {
             overflow: hidden;
-            border-right: .15em solid #BF5700;
+            border-right: .15em solid #f0e6d2;
             white-space: nowrap;
             margin: 0 auto;
             letter-spacing: .15em;
+            animation: typing 4s steps(40, end), blink-caret .75s step-end infinite;
         }
         @keyframes typing {
             from { width: 0 }
@@ -59,38 +63,31 @@
         }
         @keyframes blink-caret {
             from, to { border-color: transparent }
-            50% { border-color: #BF5700; }
+            50% { border-color: #f0e6d2; }
         }
         img {
             max-width: 100%;
             height: auto;
             margin-top: 1rem;
         }
-        button {
-            background-color: #BF5700;
-            color: white;
+        .logo {
+            max-width: 300px;
+            margin-bottom: 1rem;
+        }
+        button, .button-link {
+            background-color: #c79a3b; /* League of Legends Gold */
+            color: #0e1a2b;
             border: none;
             padding: 0.5rem 1rem;
             border-radius: 5px;
             cursor: pointer;
             font-size: 1rem;
-            width: 100%;
+            text-decoration: none;
+            display: inline-block;
             margin-top: 1rem;
         }
-        button:hover {
-            background-color: #A54900;
-        }
-        input[type="text"] {
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            border: 1px solid #BF5700;
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .error {
-            color: red;
-            margin-top: 1rem;
+        button:hover, .button-link:hover {
+            background-color: #b3862c;
         }
         @media (max-width: 600px) {
             .container {
@@ -107,19 +104,17 @@
         </div>
     </div>
     <div class="container" id="container">
-        <img src="/static/bevo200.gif" alt="Bevo GIF" width="200">
-        <h1>Hi Cutie!</h1>
-        <p>Solve this UT Austin-themed riddle to reveal the details of our date on June 1:</p>
-        <p>"Where did we learn how to play Monopoly Deal and concerningly watch our child drink 10+ beers every Tuesday?"</p>
-        <form action="/reveal" method="post">
-            <input type="text" name="answer" required>
-            <button type="submit">Submit</button>
-        </form>
-        <div class="error" id="error"></div>
+        <img src="/static/lee_of_legends.png" alt="Lee of Legends Logo" class="logo">
+        <img src="/static/choncc_plushie.jpg" alt="Choncc Plushie" width="200">
+        <h1>Happy Birthday, Diana!</h1>
+        <p>Thank you for all the support you've given us, and we are so proud of you Dr. Lee/Reinhart <3</p>
+        <p>We thought you'd like this for when you play your TFT games :):</p>
+        <p>A super cute Choncc plushie from TFT!</p>
+        <a href="https://merch.riotgames.com/en-us/product/choncc-plush/" target="_blank" class="button-link">View Gift</a>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const typewriterText = "Hi Kayla! I decided to use everything I learned coding the resy bot for this :)";
+            const typewriterText = "Hi 큰누나! A special big sister deserves a special website for her birthday!";
             const typewriterElement = document.getElementById('typewriter-text');
             let index = 0;
 

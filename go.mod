@@ -1,3 +1,3 @@
-module puzzle-project
+module tft-bday
 
 go 1.22.3
