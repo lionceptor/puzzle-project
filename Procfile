@@ -1,1 +1,1 @@
-web: tft-bday
+module puzzle-project
