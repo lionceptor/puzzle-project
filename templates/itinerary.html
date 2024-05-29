@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Itinerary</title>
-    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
     <style>
         #map {
@@ -33,9 +33,9 @@
     </footer>
     <script>
         function initMap() {
-            var chelseaPiers = {lat: 40.7465, lng: -74.0094};
-            var emmetsOnGrove = {lat: 40.7328, lng: -74.0042};
-            var pier46 = {lat: 40.7321, lng: -74.0119};
+            var chelseaPiers = { lat: 40.7465, lng: -74.0094 };
+            var emmetsOnGrove = { lat: 40.7328, lng: -74.0042 };
+            var pier46 = { lat: 40.7321, lng: -74.0119 };
 
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 14,
@@ -49,11 +49,11 @@
             var request = {
                 origin: chelseaPiers,
                 destination: pier46,
-                waypoints: [{location: emmetsOnGrove}],
+                waypoints: [{ location: emmetsOnGrove }],
                 travelMode: 'WALKING'
             };
 
-            directionsService.route(request, function(result, status) {
+            directionsService.route(request, function (result, status) {
                 if (status === 'OK') {
                     directionsRenderer.setDirections(result);
                 }
