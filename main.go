@@ -14,6 +14,10 @@ func main() {
 		templates.ExecuteTemplate(w, "index.html", nil)
 	})
 
+	http.HandleFunc("/itinerary", func(w http.ResponseWriter, r *http.Request) {
+        templates.ExecuteTemplate(w, "itinerary.html", nil)
+  	 )
+	
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	port := os.Getenv("PORT")
