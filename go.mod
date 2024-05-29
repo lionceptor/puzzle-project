@@ -1,1 +1,1 @@
-web: puzzle-project
+web puzzle-project
