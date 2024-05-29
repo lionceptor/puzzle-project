@@ -1,1 +1,1 @@
-web puzzle-project
+module puzzle-project
