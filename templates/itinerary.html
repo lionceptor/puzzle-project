@@ -1,64 +1,45 @@
+<!-- itinerary.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Itinerary</title>
     <link rel="stylesheet" href="/static/styles.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
-    <style>
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <h1>Itinerary for June 1</h1>
-    </header>
-    <main>
-        <div id="map"></div>
-        <div class="schedule">
-            <h2>Schedule</h2>
-            <ul>
-                <li>6:00 PM - 6:30 PM: Chelsea Piers Manhattan</li>
-                <li>6:45 PM: Emmet's on Grove</li>
-                <li>Walk to Pier 46 to catch the sunset</li>
-            </ul>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 Your Project</p>
-    </footer>
+    <h1>June 1, 2024</h1>
+    <p>Meet at Chelsea Piers Field House Manhattan at 5:45 PM</p>
+    <p>Baseball Cages 6-6:30 PM</p>
+    <p>Change and Uber to Emmett's on Grove for 6:45 PM reservation</p>
+    <p>Order a bottle of wine from the restaurant: 
+        <button onclick="location.href='https://media-cdn.getbento.com/accounts/f45db4c31dc4121808f3141ecd9a2077/media/lhI5fBqrQxGEg48mIkfl_W%26S%20Apr%2024.pdf'" class="button">
+            View Wine Menu
+        </button>
+    </p>
+    <p>Head to Pier 46 in time to be early to get a picnic spot for sunset.</p>
+    <div id="map"></div>
     <script>
         function initMap() {
-            var chelseaPiers = { lat: 40.7465, lng: -74.0094 };
-            var emmetsOnGrove = { lat: 40.7328, lng: -74.0042 };
-            var pier46 = { lat: 40.7321, lng: -74.0119 };
+            var locations = [
+                {lat: 40.7465, lng: -74.0094, title: 'Chelsea Piers Field House Manhattan'},
+                {lat: 40.7336, lng: -74.0031, title: 'Emmett\'s on Grove'},
+                {lat: 40.7286, lng: -74.0115, title: 'Pier 46'}
+            ];
 
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 14,
-                center: chelseaPiers
+                center: locations[0]
             });
 
-            var directionsService = new google.maps.DirectionsService();
-            var directionsRenderer = new google.maps.DirectionsRenderer();
-            directionsRenderer.setMap(map);
-
-            var request = {
-                origin: chelseaPiers,
-                destination: pier46,
-                waypoints: [{ location: emmetsOnGrove }],
-                travelMode: 'WALKING'
-            };
-
-            directionsService.route(request, function (result, status) {
-                if (status === 'OK') {
-                    directionsRenderer.setDirections(result);
-                }
+            locations.forEach(function(location) {
+                new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    title: location.title
+                });
             });
         }
     </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
 </body>
 </html>
